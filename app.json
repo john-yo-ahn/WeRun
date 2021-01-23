@@ -1,0 +1,12 @@
+{
+  "name": "WeRun",
+  "displayName": "WeRun",
+  "expo": {
+    "name": "WeRun",
+    "slug": "WeRun",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
