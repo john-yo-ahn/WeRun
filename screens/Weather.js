@@ -73,7 +73,6 @@ const Weather = () => {
      }
 
      const current = forecast.current.weather[0];
-     // TODO: In an upcoming blog post, I'll be extracting components out of this class as you would in a real application.
      return (
        <SafeAreaView style={styles.container}>
          <ScrollView
@@ -128,9 +127,8 @@ const Weather = () => {
              />
            </View>
 
-           <Text style={styles.subtitle}>Next 5 Days</Text>
-           {forecast.daily.slice(0, 5).map((d) => {
-             //Only want the next 5 days
+           <Text style={styles.subtitle}>Next 3 Days</Text>
+           {forecast.daily.slice(0, 3).map((d) => {
              const weather = d.weather[0];
              var dt = new Date(d.dt * 1000);
              return (
