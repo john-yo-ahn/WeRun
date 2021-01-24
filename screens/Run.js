@@ -1,6 +1,8 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, {Component} from "react";
+import { View, Text, StyleSheet, Alert}  from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import BackgroundGeolocation from "@mauron85/react-native-background-geolocation";
+
 
 const TabIcon = (props) => (
   <Ionicons
@@ -10,7 +12,7 @@ const TabIcon = (props) => (
   />
 );
 
-export default class ScreenThree extends React.Component {
+export default class Run extends React.Component {
   static navigationOptions = {
     tabBarIcon: TabIcon,
   };
