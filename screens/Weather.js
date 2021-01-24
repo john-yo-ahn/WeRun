@@ -16,7 +16,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 
 const openWeatherKey = `a60fdbd1375106e760439297e38d55e0`;
-let url = `https://api.openweathermap.org/data/2.5/onecall?&units=metric&exclude=minutely&appid=${openWeatherKey}`;
+let url = `https://api.openweathermap.org/data/2.5/onecall?&units=imperial&exclude=minutely&appid=${openWeatherKey}`;
 
 
 const TabIcon = (props) => (
@@ -95,7 +95,7 @@ const Weather = () => {
                }}
              />
              <Text style={styles.currentTemp}>
-               {Math.round(forecast.current.temp)}°C
+               {Math.round(forecast.current.temp)}°F
              </Text>
            </View>
 
@@ -104,7 +104,7 @@ const Weather = () => {
              <Text style={styles.subtitle}>Hourly Forecast</Text>
              <FlatList
                horizontal
-               data={forecast.hourly.slice(0, 24)}
+               data={forecast.hourly.slice(0, 12)}
                keyExtractor={(item, index) => index.toString()}
                renderItem={(hour) => {
                  const weather = hour.item.weather[0];
@@ -114,7 +114,7 @@ const Weather = () => {
                      <Text>
                        {dt.toLocaleTimeString().replace(/:\d+ /, " ")}
                      </Text>
-                     <Text>{Math.round(hour.item.temp)}°C</Text>
+                     <Text>{Math.round(hour.item.temp)}°F</Text>
                      <Image
                        style={styles.smallIcon}
                        source={{
@@ -135,7 +135,7 @@ const Weather = () => {
              var dt = new Date(d.dt * 1000);
              return (
                <View style={styles.day} key={d.dt}>
-                 <Text style={styles.dayTemp}>{Math.round(d.temp.max)}°C</Text>
+                 <Text style={styles.dayTemp}>{Math.round(d.temp.max)}°F</Text>
                  <Image
                    style={styles.smallIcon}
                    source={{
