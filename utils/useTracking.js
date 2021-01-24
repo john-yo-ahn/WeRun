@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Alert } from "react-native";
 import BackgroundGeolocation from "@mauron85/react-native-background-geolocation";
-import { defaultLocation } from "../utils/vars";
+import { defaultLocation } from "../utils/defaultLocation.js";
 import { getDistanceFromLatLonInKm } from "../utils/getDistance";
 
 const useTracking = (isActive) => {
@@ -150,7 +150,7 @@ const useTracking = (isActive) => {
         BackgroundGeolocation.start(); //triggers start on start event
       }
     });
-
+    console.log('BackgroundGeolocation---->', BackgroundGeolocation)
     return () => {
       console.log("Removing all listeners");
       BackgroundGeolocation.removeAllListeners();
