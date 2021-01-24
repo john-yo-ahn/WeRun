@@ -48,7 +48,6 @@ const Weather = () => {
          `${url}&lat=${location.coords.latitude}&lon=${location.coords.longitude}`
        );
        const data = await response.json();
-
        if (!response.ok) {
          Alert.alert(`Error retrieving weather data: ${data.message}`);
        } else {
@@ -71,8 +70,8 @@ const Weather = () => {
          </SafeAreaView>
        );
      }
-
      const current = forecast.current.weather[0];
+
      return (
        <SafeAreaView style={styles.container}>
          <ScrollView
@@ -127,8 +126,8 @@ const Weather = () => {
              />
            </View>
 
-           <Text style={styles.subtitle}>Next 3 Days</Text>
-           {forecast.daily.slice(0, 3).map((d) => {
+           <Text style={styles.subtitle}>Next 5 Days</Text>
+           {forecast.daily.slice(0, 5).map((d) => {
              const weather = d.weather[0];
              var dt = new Date(d.dt * 1000);
              return (
