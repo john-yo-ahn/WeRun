@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 ;import { createBottomTabNavigator } from 'react-navigation-tabs'
+import Icon from "react-native-vector-icons/Ionicons";  
+
 
 
 import Home from '../screens/Home';
@@ -14,7 +16,7 @@ const BottomTabNavigator = createBottomTabNavigator({
     Run: Run,
 }, {
     tabBarOptions: {
-        showLabel: false
+        showLabel: true
     }
 }
 
