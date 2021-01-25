@@ -1,6 +1,7 @@
 
 import React from "react";
 import {
+  Animated,
   StyleSheet,
   View,
   Text,
@@ -20,6 +21,8 @@ import MapView, {
 import haversine from "haversine";
 import PubNubReact from "pubnub-react";
 import { Ionicons } from "@expo/vector-icons";
+import { IconButton, Colors } from "react-native-paper";
+
 
 
 
@@ -56,7 +59,7 @@ class Run extends React.Component {
         latitude: LATITUDE,
         longitude: LONGITUDE,
         latitudeDelta: 0,
-        longitudeDelta: 0
+        longitudeDelta: 0,
       }),
       isRecording: false
     };
@@ -85,7 +88,7 @@ class Run extends React.Component {
           if (this.marker) {
             this.marker._component.animateMarkerToCoordinate(
               newCoordinate,
-              500
+              10000
             );
           }
         } else {
@@ -103,7 +106,6 @@ class Run extends React.Component {
           : this.setState({
               latitude,
               longitude,
-              routeCoordinates: routeCoordinates.concat([newCoordinate]),
               prevLatLng: newCoordinate,
             });
       },
@@ -125,7 +127,11 @@ class Run extends React.Component {
     if (this.state.isRecording === false) {
       this.setState({ isRecording: true });
     } else {
-      this.setState({ isRecording: false });
+      this.setState({
+        isRecording: false,
+        routeCoordinates: [],
+        distanceTravelled: 0,
+      });
     }
   }
 
@@ -147,36 +153,57 @@ class Run extends React.Component {
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-            <MapView
-              style={styles.map}
-              provider={PROVIDER_GOOGLE}
-              showUserLocation
-              followUserLocation
-              loadingEnabled
-              region={this.getMapRegion()}
-            >
-              {this.state.isRecording ? (<Polyline
+          <MapView
+            style={styles.map}
+            provider={PROVIDER_GOOGLE}
+            showUserLocation
+            followUserLocation
+            loadingEnabled
+            region={this.getMapRegion()}
+          >
+            {this.state.isRecording ? (
+              <Polyline
                 coordinates={this.state.routeCoordinates}
                 strokeWidth={5}
-              />) : <View></View>}
-              <Marker.Animated
-                ref={(marker) => {
-                  this.marker = marker;
-                }}
-                coordinate={this.state.coordinate}
+                strokeColor="#e96e50"
               />
-            </MapView>
+            ) : (
+              <View></View>
+            )}
+            <Marker.Animated
+              ref={(marker) => {
+                this.marker = marker;
+              }}
+              coordinate={this.state.coordinate}
+            />
+          </MapView>
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={[styles.bubble, styles.button]}>
-              <Text style={styles.bottomBarContent}>
-                {parseFloat(this.state.distanceTravelled).toFixed(2)} km
-              </Text>
-            </TouchableOpacity>
+            {this.state.isRecording ? (
+              <TouchableOpacity style={[styles.bubble, styles.button]}>
+                <Text style={styles.currentDescription}>
+                  {parseFloat(this.state.distanceTravelled).toFixed(2)} km
+                </Text>
+              </TouchableOpacity>
+            ) : (
+              <View></View>
+            )}
             <View>
               {this.state.isRecording ? (
-                <Button title="Stop!" onPress={this.handleClick}></Button>
+                <TouchableOpacity onPress={this.handleClick}>
+                  <Ionicons
+                    name={"stop-circle-outline"}
+                    size={90}
+                    color={"red"}
+                  ></Ionicons>
+                </TouchableOpacity>
               ) : (
-                <Button title="Run!" onPress={this.handleClick}></Button>
+                <TouchableOpacity onPress={this.handleClick}>
+                  <Ionicons
+                    name={"radio-button-on-outline"}
+                    size={105}
+                    color={"white"}
+                  ></Ionicons>
+                </TouchableOpacity>
               )}
             </View>
           </View>
@@ -190,33 +217,40 @@ const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "flex-end",
-    alignItems: "center"
+    alignItems: "center",
   },
   map: {
-    ...StyleSheet.absoluteFillObject
+    ...StyleSheet.absoluteFillObject,
   },
   bubble: {
     flex: 1,
     backgroundColor: "rgba(255,255,255,0.7)",
     paddingHorizontal: 18,
     paddingVertical: 12,
-    borderRadius: 20
+    borderRadius: 20,
   },
   latlng: {
     width: 200,
-    alignItems: "stretch"
+    alignItems: "stretch",
   },
   button: {
     width: 80,
     paddingHorizontal: 12,
     alignItems: "center",
-    marginHorizontal: 10
+    marginHorizontal: 10,
   },
   buttonContainer: {
     flexDirection: "row",
     marginVertical: 20,
-    backgroundColor: "transparent"
-  }
+    backgroundColor: "transparent",
+  },
+  currentDescription: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 60,
+    marginBottom: 5,
+  },
 });
 
 export default Run;
