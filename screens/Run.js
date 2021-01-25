@@ -61,9 +61,15 @@ class Run extends React.Component {
         latitudeDelta: 0,
         longitudeDelta: 0,
       }),
-      isRecording: false
+      isRecording: false,
+      timer: null,
+      minutes: "00",
+      counter: "00",
+      miliseconds: "00",
+      startDisabled: true,
+      stopDisabled: false,
     };
-    this.handleClick = this.handleClick.bind(this)
+    this.handleClick = this.handleClick.bind(this);
     this.pubnub = new PubNubReact({
       publishKey: "pub-c-e2606673-fbd6-44fe-bca3-1d2ae35e1283",
       subscribeKey: "sub-c-e4ff0e02-5eb0-11eb-aca9-6efe1c667573",
@@ -75,13 +81,13 @@ class Run extends React.Component {
     const { coordinate } = this.state;
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
     this.watchID = navigator.geolocation.watchPosition(
-      position => {
+      (position) => {
         const { routeCoordinates, distanceTravelled } = this.state;
         const { latitude, longitude } = position.coords;
 
         const newCoordinate = {
           latitude,
-          longitude
+          longitude,
         };
 
         if (Platform.OS === "android") {
@@ -109,47 +115,90 @@ class Run extends React.Component {
               prevLatLng: newCoordinate,
             });
       },
-      error => console.log(error),
+      (error) => console.log(error),
       {
         enableHighAccuracy: true,
         timeout: 20000,
         maximumAge: 1000,
-        distanceFilter: 10
+        distanceFilter: 10,
       }
     );
+    // this.start();
   }
 
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchID);
+    clearInterval(this.state.timer);
   }
 
-  handleClick () {
+  handleClick() {
     if (this.state.isRecording === false) {
       this.setState({ isRecording: true });
+      this.onButtonStart()
     } else {
       this.setState({
         isRecording: false,
         routeCoordinates: [],
         distanceTravelled: 0,
       });
+      this.onButtonClear()
     }
   }
-
   getMapRegion = () => ({
     latitude: this.state.latitude,
     longitude: this.state.longitude,
     latitudeDelta: LATITUDE_DELTA,
-    longitudeDelta: LONGITUDE_DELTA
+    longitudeDelta: LONGITUDE_DELTA,
   });
 
-  calcDistance = newLatLng => {
+  calcDistance = (newLatLng) => {
     const { prevLatLng } = this.state;
-    return haversine(prevLatLng, newLatLng) || 0
+    return haversine(prevLatLng, newLatLng) || 0;
   };
 
+  onButtonStart() {
+    this.start();
+    this.setState({ startDisabled: true, stopDisabled: false });
+  }
+
+  onButtonStop() {
+    clearInterval(this.state.timer);
+    this.setState({ startDisabled: false, stopDisabled: true });
+  }
+
+  onButtonClear() {
+    this.setState({
+      timer: null,
+      minutes: "00",
+      counter: "00",
+    });
+  }
+
+  start() {
+    var self = this;
+    let timer = setInterval(() => {
+      var num = (Number(this.state.miliseconds) + 1).toString(),
+        count = this.state.counter;
+        minute = this.state.minutes;
+
+      if (Number(this.state.miliseconds) == 99) {
+        count = (Number(this.state.counter) + 1).toString();
+        num = "00";
+      }
+      if (Number(this.state.counter) == 59) {
+        minute = (Number(this.state.minutes) + 1).toString();
+        count="00"
+
+      }
+      self.setState({
+        counter: count.length == 1 ? "0" + count : count,
+        miliseconds: num.length == 1 ? "0" + num : num,
+        minutes: minute.length == 1 ? "0" + minute: minute,
+      });
+    }, 0);
+    this.setState({ timer });
+  }
   render() {
-    console.log('this.isRecording', this.state.isRecording)
-    
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
@@ -180,7 +229,14 @@ class Run extends React.Component {
           <View style={styles.buttonContainer}>
             {this.state.isRecording ? (
               <TouchableOpacity style={[styles.bubble, styles.button]}>
-                <Text style={styles.currentDescription}>
+                <View>
+                  <Text style={styles.currentTimer}>
+                    {this.state.minutes}.
+                    {this.state.counter}.
+                    {this.state.miliseconds}s
+                  </Text>
+                </View>
+                <Text style={styles.currentDistance}>
                   {parseFloat(this.state.distanceTravelled).toFixed(2)} km
                 </Text>
               </TouchableOpacity>
@@ -189,10 +245,10 @@ class Run extends React.Component {
             )}
             <View>
               {this.state.isRecording ? (
-                <TouchableOpacity onPress={this.handleClick}>
+                <TouchableOpacity onPress={this.handleClick} >
                   <Ionicons
                     name={"stop-circle-outline"}
-                    size={90}
+                    size={110}
                     color={"red"}
                   ></Ionicons>
                 </TouchableOpacity>
@@ -200,7 +256,7 @@ class Run extends React.Component {
                 <TouchableOpacity onPress={this.handleClick}>
                   <Ionicons
                     name={"radio-button-on-outline"}
-                    size={105}
+                    size={120}
                     color={"white"}
                   ></Ionicons>
                 </TouchableOpacity>
@@ -244,11 +300,19 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     backgroundColor: "transparent",
   },
-  currentDescription: {
+  currentDistance: {
     width: "100%",
     textAlign: "center",
     fontWeight: "200",
     fontSize: 60,
+    marginBottom: 5,
+    color: "#e96e50",
+  },
+  currentTimer: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 30,
     marginBottom: 5,
   },
 });
