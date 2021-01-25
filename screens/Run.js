@@ -24,9 +24,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { IconButton, Colors } from "react-native-paper";
 
 
-
-
-
 const TabIcon = (props) => (
   <Ionicons
     name={"walk-outline"}
@@ -257,7 +254,7 @@ class Run extends React.Component {
                   <Ionicons
                     name={"radio-button-on-outline"}
                     size={120}
-                    color={"white"}
+                    color={"red"}
                   ></Ionicons>
                 </TouchableOpacity>
               )}
