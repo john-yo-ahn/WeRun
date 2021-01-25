@@ -10,7 +10,7 @@ const TabIcon = (props) => (
   />
 );
 
-export default class ScreenOne extends React.Component {
+export default class Home extends React.Component {
   static navigationOptions = {
       tabBarIcon: TabIcon
   };
