@@ -16,7 +16,7 @@ const BottomTabNavigator = createBottomTabNavigator({
     Run: Run,
 }, {
     tabBarOptions: {
-        showLabel: true
+        showLabel: false
     }
 }
 

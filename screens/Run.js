@@ -9,10 +9,11 @@ import {
   SafeAreaView,
   PermissionsAndroid,
   LogBox,
+  Button,
 } from "react-native";
 import MapView, {
   Marker,
-  AnimatedRegion,
+  AnimatedRegion, 
   Polyline,
   PROVIDER_GOOGLE
 } from "react-native-maps";
@@ -32,7 +33,6 @@ const TabIcon = (props) => (
 );
 
 
-
 // const LATITUDE = 29.95539;
 // const LONGITUDE = 78.07513;
 const LATITUDE_DELTA = 0.009;
@@ -46,7 +46,6 @@ class Run extends React.Component {
   };
   constructor(props) {
     super(props);
-
     this.state = {
       latitude: LATITUDE,
       longitude: LONGITUDE,
@@ -58,17 +57,17 @@ class Run extends React.Component {
         longitude: LONGITUDE,
         latitudeDelta: 0,
         longitudeDelta: 0
-      })
+      }),
+      isRecording: false
     };
-     this.pubnub = new PubNubReact({
+    this.handleClick = this.handleClick.bind(this)
+    this.pubnub = new PubNubReact({
       publishKey: "pub-c-e2606673-fbd6-44fe-bca3-1d2ae35e1283",
       subscribeKey: "sub-c-e4ff0e02-5eb0-11eb-aca9-6efe1c667573",
     });
     this.pubnub.init(this);
   }
-  
-  
- 
+
   componentDidMount() {
     const { coordinate } = this.state;
     LogBox.ignoreLogs(["Animated: `useNativeDriver`"]);
@@ -92,15 +91,21 @@ class Run extends React.Component {
         } else {
           coordinate.timing(newCoordinate).start();
         }
-
-        this.setState({
-          latitude,
-          longitude,
-          routeCoordinates: routeCoordinates.concat([newCoordinate]),
-          distanceTravelled:
-            distanceTravelled + this.calcDistance(newCoordinate),
-          prevLatLng: newCoordinate
-        });
+        this.state.isRecording
+          ? this.setState({
+              latitude,
+              longitude,
+              routeCoordinates: routeCoordinates.concat([newCoordinate]),
+              distanceTravelled:
+                distanceTravelled + this.calcDistance(newCoordinate),
+              prevLatLng: newCoordinate,
+            })
+          : this.setState({
+              latitude,
+              longitude,
+              routeCoordinates: routeCoordinates.concat([newCoordinate]),
+              prevLatLng: newCoordinate,
+            });
       },
       error => console.log(error),
       {
@@ -116,6 +121,14 @@ class Run extends React.Component {
     navigator.geolocation.clearWatch(this.watchID);
   }
 
+  handleClick () {
+    if (this.state.isRecording === false) {
+      this.setState({ isRecording: true });
+    } else {
+      this.setState({ isRecording: false });
+    }
+  }
+
   getMapRegion = () => ({
     latitude: this.state.latitude,
     longitude: this.state.longitude,
@@ -125,38 +138,47 @@ class Run extends React.Component {
 
   calcDistance = newLatLng => {
     const { prevLatLng } = this.state;
-    return ((haversine(prevLatLng, newLatLng)*.0624 ) || 0)
+    return haversine(prevLatLng, newLatLng) || 0
   };
 
   render() {
+    console.log('this.isRecording', this.state.isRecording)
+    
     return (
       <SafeAreaView style={{ flex: 1 }}>
         <View style={styles.container}>
-          <MapView
-            style={styles.map}
-            provider={PROVIDER_GOOGLE}
-            showUserLocation
-            followUserLocation
-            loadingEnabled
-            region={this.getMapRegion()}
-          >
-            <Polyline
-              coordinates={this.state.routeCoordinates}
-              strokeWidth={5}
-            />
-            <Marker.Animated
-              ref={(marker) => {
-                this.marker = marker;
-              }}
-              coordinate={this.state.coordinate}
-            />
-          </MapView>
+            <MapView
+              style={styles.map}
+              provider={PROVIDER_GOOGLE}
+              showUserLocation
+              followUserLocation
+              loadingEnabled
+              region={this.getMapRegion()}
+            >
+              {this.state.isRecording ? (<Polyline
+                coordinates={this.state.routeCoordinates}
+                strokeWidth={5}
+              />) : <View></View>}
+              <Marker.Animated
+                ref={(marker) => {
+                  this.marker = marker;
+                }}
+                coordinate={this.state.coordinate}
+              />
+            </MapView>
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={[styles.bubble, styles.button]}>
               <Text style={styles.bottomBarContent}>
-                {parseFloat(this.state.distanceTravelled).toFixed(2)} mi
+                {parseFloat(this.state.distanceTravelled).toFixed(2)} km
               </Text>
             </TouchableOpacity>
+            <View>
+              {this.state.isRecording ? (
+                <Button title="Stop!" onPress={this.handleClick}></Button>
+              ) : (
+                <Button title="Run!" onPress={this.handleClick}></Button>
+              )}
+            </View>
           </View>
         </View>
       </SafeAreaView>
