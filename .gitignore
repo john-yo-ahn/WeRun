@@ -62,3 +62,6 @@ buck-out/
 # Expo
 .expo/*
 web-build/
+
+#Firebase SDK
+config/keys.js 
