@@ -43,10 +43,10 @@ export default class History extends React.Component {
           {this.state.results.map((result) => (
             <TouchableOpacity>
               <View key={result.id}>
-                <Text styles={styles.time}>
+                {/* <Text styles={styles.time}>
                   {result.month}/{result.date}/{result.year}{" "}
                   {result.currentHour}:{result.currentMinutes}
-                </Text>
+                </Text> */}
                 <Text style={styles.currentTimer}>
                   {result.minutes}.{result.counter}.{result.miliseconds}s
                 </Text>

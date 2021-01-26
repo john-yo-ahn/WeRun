@@ -81,7 +81,6 @@ const styles = StyleSheet.create({
     fontWeight: "200",
     fontSize: 24,
     marginBottom: 24,
-    color: "red"
   },
 });
 
