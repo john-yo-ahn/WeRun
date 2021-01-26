@@ -6,6 +6,7 @@ import * as firebase from "firebase";
 import { loggingOut } from "../API/firebaseMethods";
 import WelcomeScreen from "../App"
 
+
 const TabIcon = (props) => (
   <Ionicons
     name={"md-home"}
@@ -46,11 +47,9 @@ const Home = () => {
   } else {
     return (
       <View style={styles.container}>
-        {this.state}
-        <Text>Dashboard</Text>
-        <Text>Hi {firstName}</Text>
+        <Text style={styles.currentDescription}>Hi {firstName}{"\n"}</Text>
         <TouchableOpacity onPress={handlePress}>
-          <Text>Log Out</Text>
+          <Text>Log Out?</Text>
         </TouchableOpacity>
       </View>
     );
@@ -68,6 +67,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  currentDescription: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 60,
+    marginBottom: 24,
+  },
+  logout: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 24,
+    marginBottom: 24,
   },
 });
 

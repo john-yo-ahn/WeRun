@@ -6,10 +6,12 @@ export default function WelcomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
         <View>
-          <Text>WeRun</Text>
+          <Text style={styles.currentDescription}>WeRun</Text>
+          <Text>{"\n"}</Text>
         </View>
         <TouchableOpacity onPress={() => navigation.navigate("Sign Up")}>
           <Text>Sign Up</Text>
+          <Text>{"\n"}</Text>
         </TouchableOpacity>
         <Text>Already have an account?</Text>
         <TouchableOpacity onPress={() => navigation.navigate("Sign In")}>
@@ -20,16 +22,25 @@ export default function WelcomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-  container: {
+container: {
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
   },
-  image: {
-    flex: 1,
-    width: 200,
-    height: 350,
-    justifyContent: "center",
+  currentDescription: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 60,
+    marginBottom: 24,
   },
-});
+  logout: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 24,
+    marginBottom: 24,
+  },
+  },
+);

@@ -48,8 +48,9 @@ export default function SignUp({ navigation }) {
 
   return (
     <SafeAreaView>
-      <View >
+      <View styles={styles.container}>
         <Text>Create an account </Text>
+        <Text>{"\n"}</Text>
         <ScrollView onBlur={Keyboard.dismiss}>
           <TextInput
             placeholder="First name*"
@@ -103,5 +104,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  currentDescription: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 40,
+    marginBottom: 24,
+  },
+  login: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 30,
+    marginTop: 20,
+    marginBottom: 24,
   },
 });
