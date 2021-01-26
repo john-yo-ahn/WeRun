@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   },
   image: {
     flex: 1,
-    width: 200,
-    height: 350,
+    width: 170,
+    height: 320,
     justifyContent: "center",
     marginTop: 210,
   },

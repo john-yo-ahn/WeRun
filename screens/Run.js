@@ -11,6 +11,7 @@ import {
   PermissionsAndroid,
   LogBox,
   Button,
+  Alert,
 } from "react-native";
 import MapView, {
   Marker,
@@ -22,6 +23,7 @@ import haversine from "haversine";
 import PubNubReact from "pubnub-react";
 import { Ionicons } from "@expo/vector-icons";
 import { IconButton, Colors } from "react-native-paper";
+import crud from '../API/crud'
 
 
 const TabIcon = (props) => (
@@ -65,6 +67,11 @@ class Run extends React.Component {
       miliseconds: "00",
       startDisabled: true,
       stopDisabled: false,
+      year: null,
+      month: null,
+      date: null,
+      currentHour: null,
+      currentMinutes: null,
     };
     this.handleClick = this.handleClick.bind(this);
     this.pubnub = new PubNubReact({
@@ -105,11 +112,21 @@ class Run extends React.Component {
               distanceTravelled:
                 distanceTravelled + this.calcDistance(newCoordinate),
               prevLatLng: newCoordinate,
+              year: new Date().getFullYear(),
+              month: new Date().getMonth() + 1,
+              date: new Date().getDate(),
+              currentHour: new Date().getHours(),
+              currentMinutes: new Date().getMinutes(),
             })
           : this.setState({
               latitude,
               longitude,
               prevLatLng: newCoordinate,
+              year: new Date().getFullYear(),
+              month: new Date().getMonth() + 1,
+              date: new Date().getDate(),
+              currentHour: new Date().getHours(),
+              currentMinutes: new Date().getMinutes(),
             });
       },
       (error) => console.log(error),
@@ -131,14 +148,43 @@ class Run extends React.Component {
   handleClick() {
     if (this.state.isRecording === false) {
       this.setState({ isRecording: true });
-      this.onButtonStart()
+      this.onButtonStart();
     } else {
-      this.setState({
-        isRecording: false,
-        routeCoordinates: [],
-        distanceTravelled: 0,
-      });
-      this.onButtonClear()
+      this.onButtonStop();
+      Alert.alert(
+        'Save',
+        'Would you like to stop and save your run session?',
+        [
+          {
+            text: 'Save',
+            onPress: () => {
+              this.postDataHandler();
+              this.setState({
+                isRecording: false,
+                routeCoordinates: [],
+                distanceTravelled: 0,
+              });
+              this.onButtonClear();
+              Alert.alert(
+                'Saved. Great Job!!',
+                '',
+                [
+                  {text: 'Ok!',
+                  onPress: () => console.log('OK Pressed')
+                }
+                ],
+                {cancelable: true}
+              )
+            }
+          },
+          {
+            text: 'Discard',
+            style: 'cancel',
+            onPress: () => this.onButtonStart(),
+          }
+        ],
+        {cancelable: false}
+      )
     }
   }
   getMapRegion = () => ({
@@ -176,7 +222,7 @@ class Run extends React.Component {
     let timer = setInterval(() => {
       var num = (Number(this.state.miliseconds) + 1).toString(),
         count = this.state.counter;
-        minute = this.state.minutes;
+      minute = this.state.minutes;
 
       if (Number(this.state.miliseconds) == 99) {
         count = (Number(this.state.counter) + 1).toString();
@@ -184,17 +230,35 @@ class Run extends React.Component {
       }
       if (Number(this.state.counter) == 59) {
         minute = (Number(this.state.minutes) + 1).toString();
-        count="00"
-
+        count = "00";
       }
       self.setState({
         counter: count.length == 1 ? "0" + count : count,
         miliseconds: num.length == 1 ? "0" + num : num,
-        minutes: minute.length == 1 ? "0" + minute: minute,
+        minutes: minute.length == 1 ? "0" + minute : minute,
       });
     }, 0);
     this.setState({ timer });
   }
+
+  postDataHandler = () => {
+    const data = {
+      minutes: this.state.minutes,
+      counter: this.state.counter,
+      miliseconds: this.state.miliseconds,
+      routeCoordinates: this.state.routeCoordinates,
+      distanceTravelled: this.state.distanceTravelled,
+      year: this.state.year,
+      month: this.state.month,
+      date: this.state.date,
+      currentHour: this.state.currentHour,
+      currentMinutes: this.state.currentMinutes,
+    };
+    crud.post("/history.json", data).then(response => {
+      console.log(response.data)
+    });
+  };
+
   render() {
     return (
       <SafeAreaView style={{ flex: 1 }}>
@@ -228,8 +292,7 @@ class Run extends React.Component {
               <TouchableOpacity style={[styles.bubble, styles.button]}>
                 <View>
                   <Text style={styles.currentTimer}>
-                    {this.state.minutes}.
-                    {this.state.counter}.
+                    {this.state.minutes}.{this.state.counter}.
                     {this.state.miliseconds}s
                   </Text>
                 </View>
@@ -237,12 +300,11 @@ class Run extends React.Component {
                   {parseFloat(this.state.distanceTravelled).toFixed(2)} km
                 </Text>
               </TouchableOpacity>
-            ) : (
-              <View></View>
-            )}
+            ) : 
+             <View></View> }
             <View>
               {this.state.isRecording ? (
-                <TouchableOpacity onPress={this.handleClick} >
+                <TouchableOpacity onPress={this.handleClick}>
                   <Ionicons
                     name={"stop-circle-outline"}
                     size={110}

@@ -22,7 +22,7 @@ export default function SignIn() {
 
   return (
     <View style={styles.container}>
-      <Text >Sign in to your account:</Text>
+      <Text style={styles.currentDescription}>Sign in to your account:</Text>
 
       <TextInput
         placeholder="Enter your email"
@@ -37,7 +37,8 @@ export default function SignIn() {
         secureTextEntry={true}
       />
       <TouchableOpacity onPress={handlePress} >
-        <Text>Submit</Text>
+        <Text> {"\n"}</Text>
+        <Text> Submit </Text>
       </TouchableOpacity>
     </View>
   );
@@ -49,5 +50,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  currentDescription: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 40,
+    marginBottom: 24,
+  },
+  login: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 30,
+    marginTop: 20,
+    marginBottom: 24,
   },
 });
