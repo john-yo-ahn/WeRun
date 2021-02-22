@@ -245,7 +245,7 @@ class Run extends React.Component {
       currentMinutes: this.state.currentMinutes,
     };
     crud.post("/history.json", data).then(response => {
-      console.log(response.data)
+      console.log('response.data---->',response.data)
     });
   };
 
@@ -256,10 +256,10 @@ class Run extends React.Component {
           <MapView
             style={styles.map}
             // provider={PROVIDER_GOOGLE}
-            showUserLocation
-            followUserLocation
+            showUserLocation = {true}
+            // followUserLocation
             loadingEnabled
-            region={this.getMapRegion()}
+            // region={this.getMapRegion()}
           >
             {this.state.isRecording ? (
               <Polyline

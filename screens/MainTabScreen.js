@@ -3,6 +3,7 @@ import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import Run from "../screens/Run"
+import Weather from "../screens/Weather"
 
 import Icon from "react-native-vector-icons/Ionicons";
 
@@ -15,6 +16,10 @@ const MainTabScreen = () => (
         <Tab.Screen 
             name="Run"
             component={Run}
+        />
+        <Tab.Screen
+            name="Weather"
+            component={Weather}
         />
     </Tab.Navigator>
 );
