@@ -48,7 +48,7 @@ export default function SignUp({ navigation }) {
 
   return (
     <SafeAreaView>
-      <View styles={styles.container}>
+      <View>
         <Text>Create an account </Text>
         <Text>{"\n"}</Text>
         <ScrollView onBlur={Keyboard.dismiss}>

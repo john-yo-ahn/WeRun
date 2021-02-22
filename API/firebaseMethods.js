@@ -6,7 +6,7 @@ export async function registration(email, password, lastName, firstName) {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     const currentUser = firebase.auth().currentUser;
-
+    console.log('currentUser in firebase --->', currentUser)
     const db = firebase.firestore();
     db.collection("users")
       .doc(currentUser.uid)

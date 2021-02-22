@@ -7,13 +7,13 @@
 // import WelcomeScreen from "../App"
 
 
-// const TabIcon = (props) => (
-//   <Ionicons
-//     name={"md-home"}
-//     size={35}
-//     color={props.focused ? "grey" : "darkgrey"}
-//   />
-// );
+// // const TabIcon = (props) => (
+// //   <Ionicons
+// //     name={"md-home"}
+// //     size={35}
+// //     color={props.focused ? "grey" : "darkgrey"}
+// //   />
+// // );
 
 // const Home = () => {
 //   let currentUserUID = firebase.auth().currentUser.uid;
@@ -56,9 +56,9 @@
 //   }
 // };
 
-// Home["navigationOptions"] = (screenProps) => ({
-//   tabBarIcon: TabIcon,
-// });
+// // Home["navigationOptions"] = (screenProps) => ({
+// //   tabBarIcon: TabIcon,
+// // });
 
 
 // const styles = StyleSheet.create({
