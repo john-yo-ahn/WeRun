@@ -13,7 +13,6 @@ import { View, Text, StyleSheet } from "react-native";
 import "react-native-gesture-handler";
 // import { NavigationContainer } from "@react-navigation/native";
 // import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import BottomTabNavigator from './navigation/BottomTabNavigator'
 import Splash from './screens/Splash'
 
 const Stack = createStackNavigator();
@@ -48,13 +47,13 @@ export default class App extends React.Component{
        <NavigationContainer>
          <Stack.Navigator>
            <Stack.Screen
-             name={"Loading"}
-             component={LoadingScreen}
+             name="Home"
+             component={WelcomeScreen}
              options={{ headerShown: false }}
            />
            <Stack.Screen
-             name="WelcomeScreen"
-             component={WelcomeScreen}
+             name={"Loading"}
+             component={LoadingScreen}
              options={{ headerShown: false }}
            />
            <Stack.Screen
@@ -67,11 +66,11 @@ export default class App extends React.Component{
              component={SignIn}
              options={{ headerShown: false }}
            />
-           <Stack.Screen
+           {/* <Stack.Screen
              name={"MainTab"}
              component={MainTabScreen}
              options={{ headerShown: false }}
-           />
+           /> */}
          </Stack.Navigator>
        </NavigationContainer>
      );
