@@ -6,6 +6,7 @@ import {
   View,
   Text,
   TouchableOpacity,
+  Image,
   Platform,
   SafeAreaView,
   PermissionsAndroid,
@@ -17,13 +18,14 @@ import MapView, {
   Marker,
   AnimatedRegion, 
   Polyline,
-  PROVIDER_GOOGLE
+  // PROVIDER_GOOGLE
 } from "react-native-maps";
 import haversine from "haversine";
 import PubNubReact from "pubnub-react";
 import { Ionicons } from "@expo/vector-icons";
 import { IconButton, Colors } from "react-native-paper";
 import crud from '../API/crud'
+
 
 
 // const TabIcon = (props) => (
@@ -128,6 +130,7 @@ class Run extends React.Component {
       }
     );
     // this.start();
+    this.goToMyLocation()
   }
 
   componentWillUnmount() {
@@ -174,8 +177,11 @@ class Run extends React.Component {
     }
   }
   goToMyLocation() {
+    console.log('goToMyLocation ran')
     navigator.geolocation.getCurrentPosition(
       ( position ) => {
+        // console.log('position in goToMyLocation--->', position)
+        // console.log('this.map-->', this.map)
         if (this.map) {
           this.map.animateToRegion({
             latitude: position.coords.latitude,
@@ -267,11 +273,14 @@ class Run extends React.Component {
         <View style={styles.container}>
           <MapView
             style={styles.map}
+            ref={(map) => {
+              this.map = map;
+            }}
             // provider={PROVIDER_GOOGLE}
-            // showUserLocation={true}
+            showUserLocation={true}
             followUserLocation
             loadingEnabled
-            region={this.getMapRegion()}
+            // region={this.getMapRegion()}
           >
             {this.state.isRecording ? (
               <Polyline
@@ -287,7 +296,9 @@ class Run extends React.Component {
                 this.marker = marker;
               }}
               coordinate={this.state.coordinate}
-            />
+            >
+              <Image source={require("../assets/current-location.png")} style={styles.markerImage}></Image>
+            </Marker.Animated>
           </MapView>
           <View style={styles.buttonContainer}>
             {this.state.isRecording ? (
@@ -376,6 +387,11 @@ const styles = StyleSheet.create({
     fontWeight: "200",
     fontSize: 30,
     marginBottom: 5,
+  },
+  markerImage: {
+    width: 25,
+    height: 30,
+    marginBottom: "4%"
   },
 });
 
