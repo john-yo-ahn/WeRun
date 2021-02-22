@@ -7,13 +7,13 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
 import LoadingScreen from "./screens/LoadingScreen";
-import Dashboard from "./screens/Dashboard";
+import MainTabScreen from "./screens/LoadingScreen";
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet } from "react-native";
 import "react-native-gesture-handler";
 // import { NavigationContainer } from "@react-navigation/native";
 // import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import AppNavigator from './navigation/AppNavigator'
+import BottomTabNavigator from './navigation/BottomTabNavigator'
 import Splash from './screens/Splash'
 
 const Stack = createStackNavigator();
@@ -68,13 +68,8 @@ export default class App extends React.Component{
              options={{ headerShown: false }}
            />
            <Stack.Screen
-             name={"Dashboard"}
-             component={Dashboard}
-             options={{ headerShown: false }}
-           />
-           <Stack.Screen
-             name={"Home"}
-             component={Dashboard}
+             name={"MainTab"}
+             component={MainTabScreen}
              options={{ headerShown: false }}
            />
          </Stack.Navigator>
