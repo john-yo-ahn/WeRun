@@ -19,13 +19,13 @@ const openWeatherKey = `a60fdbd1375106e760439297e38d55e0`;
 let url = `https://api.openweathermap.org/data/2.5/onecall?&units=imperial&exclude=minutely&appid=${openWeatherKey}`;
 
 
-const TabIcon = (props) => (
-  <Ionicons
-    name={"partly-sunny-outline"}
-    size={35}
-    color={props.focused ? "grey" : "darkgrey"}
-  />
-);
+// const TabIcon = (props) => (
+//   <Ionicons
+//     name={"partly-sunny-outline"}
+//     size={35}
+//     color={props.focused ? "grey" : "darkgrey"}
+//   />
+// );
 
 const Weather = () => {
 
@@ -151,9 +151,9 @@ const Weather = () => {
      );
 }
 
-Weather["navigationOptions"] = (screenProps) => ({
-  tabBarIcon: TabIcon,
-});
+// Weather["navigationOptions"] = (screenProps) => ({
+//   tabBarIcon: TabIcon,
+// });
 
 
 const styles = StyleSheet.create({

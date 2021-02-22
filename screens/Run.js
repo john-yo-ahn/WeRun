@@ -26,13 +26,13 @@ import { IconButton, Colors } from "react-native-paper";
 import crud from '../API/crud'
 
 
-const TabIcon = (props) => (
-  <Ionicons
-    name={"walk-outline"}
-    size={35}
-    color={props.focused ? "grey" : "darkgrey"}
-  />
-);
+// const TabIcon = (props) => (
+//   <Ionicons
+//     name={"walk-outline"}
+//     size={35}
+//     color={props.focused ? "grey" : "darkgrey"}
+// //   />
+// );
 
 
 // const LATITUDE = 29.95539;
@@ -43,9 +43,9 @@ const LATITUDE = 37.78825;
 const LONGITUDE = -122.4324;
 
 class Run extends React.Component {
-  static navigationOptions = {
-    tabBarIcon: TabIcon,
-  };
+  // static navigationOptions = {
+  //   tabBarIcon: TabIcon,
+  // };
   constructor(props) {
     super(props);
     this.state = {
@@ -74,11 +74,11 @@ class Run extends React.Component {
       currentMinutes: null,
     };
     this.handleClick = this.handleClick.bind(this);
-    this.pubnub = new PubNubReact({
-      publishKey: "pub-c-e2606673-fbd6-44fe-bca3-1d2ae35e1283",
-      subscribeKey: "sub-c-e4ff0e02-5eb0-11eb-aca9-6efe1c667573",
-    });
-    this.pubnub.init(this);
+    // this.pubnub = new PubNubReact({
+    //   publishKey: "pub-c-e2606673-fbd6-44fe-bca3-1d2ae35e1283",
+    //   subscribeKey: "sub-c-e4ff0e02-5eb0-11eb-aca9-6efe1c667573",
+    // });
+    // this.pubnub.init(this);
   }
 
   componentDidMount() {
@@ -93,17 +93,7 @@ class Run extends React.Component {
           latitude,
           longitude,
         };
-
-        if (Platform.OS === "android") {
-          if (this.marker) {
-            this.marker._component.animateMarkerToCoordinate(
-              newCoordinate,
-              10000
-            );
-          }
-        } else {
-          coordinate.timing(newCoordinate).start();
-        }
+        coordinate.timing(newCoordinate).start();
         this.state.isRecording
           ? this.setState({
               latitude,
@@ -152,11 +142,11 @@ class Run extends React.Component {
     } else {
       this.onButtonStop();
       Alert.alert(
-        'Save',
-        'Would you like to stop and save your run session?',
+        "Save",
+        "Would you like to stop and save your run session?",
         [
           {
-            text: 'Save',
+            text: "Save",
             onPress: () => {
               this.postDataHandler();
               this.setState({
@@ -166,26 +156,38 @@ class Run extends React.Component {
               });
               this.onButtonClear();
               Alert.alert(
-                'Saved. Great Job!!',
-                '',
-                [
-                  {text: 'Ok!',
-                  onPress: () => console.log('OK Pressed')
-                }
-                ],
-                {cancelable: true}
-              )
-            }
+                "Saved. Great Job!!",
+                "",
+                [{ text: "Ok!", onPress: () => console.log("OK Pressed") }],
+                { cancelable: true }
+              );
+            },
           },
           {
-            text: 'Discard',
-            style: 'cancel',
+            text: "Discard",
+            style: "cancel",
             onPress: () => this.onButtonStart(),
-          }
+          },
         ],
-        {cancelable: false}
-      )
+        { cancelable: false }
+      );
     }
+  }
+  goToMyLocation() {
+    navigator.geolocation.getCurrentPosition(
+      ( position ) => {
+        if (this.map) {
+          this.map.animateToRegion({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.015,
+          });
+        }
+      },
+      (error) => alert("Error: Are location services on?"),
+      { enableHighAccuracy: true }
+    );
   }
   getMapRegion = () => ({
     latitude: this.state.latitude,
@@ -254,9 +256,9 @@ class Run extends React.Component {
       currentHour: this.state.currentHour,
       currentMinutes: this.state.currentMinutes,
     };
-    crud.post("/history.json", data).then(response => {
-      console.log(response.data)
-    });
+    // crud.post("/history.json", data).then((response) => {
+    //   console.log("response.data---->", response.data);
+    // });
   };
 
   render() {
@@ -265,8 +267,8 @@ class Run extends React.Component {
         <View style={styles.container}>
           <MapView
             style={styles.map}
-            provider={PROVIDER_GOOGLE}
-            showUserLocation
+            // provider={PROVIDER_GOOGLE}
+            // showUserLocation={true}
             followUserLocation
             loadingEnabled
             region={this.getMapRegion()}
@@ -300,8 +302,9 @@ class Run extends React.Component {
                   {parseFloat(this.state.distanceTravelled).toFixed(2)} km
                 </Text>
               </TouchableOpacity>
-            ) : 
-             <View></View> }
+            ) : (
+              <View></View>
+            )}
             <View>
               {this.state.isRecording ? (
                 <TouchableOpacity onPress={this.handleClick}>

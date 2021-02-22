@@ -6,9 +6,9 @@ export default function LoadingScreen({ navigation }) {
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
-        navigation.replace("Dashboard");
+        navigation.replace("MainTab");
       } else {
-        navigation.replace("WelcomeScreen");
+        navigation.replace("Home");
       }
     });
   });

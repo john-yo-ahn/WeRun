@@ -5,44 +5,34 @@ import * as firebase from "firebase";
 import crud from "../API/crud";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-const TabIcon = (props) => (
-  <Ionicons
-    name={"time-outline"}
-    size={35}
-    color={props.focused ? "grey" : "darkgrey"}
-  />
-);
-
 export default class History extends React.Component {
-  static navigationOptions = {
-    tabBarIcon: TabIcon,
-  };
+ 
   state={
     results:[]
   }
 
   componentDidMount() {
-    crud.get('/history.json').then(response => {
-      const fetchedResults = []
-      for (let key in response.data) {
-        fetchedResults.unshift(
-          {
-            ...response.data[key],
-            id:key
-          }
-        )
-      }
-      this.setState({results:fetchedResults})
-    })
+    // crud.get('/history.json').then(response => {
+    //   const fetchedResults = []
+    //   for (let key in response.data) {
+    //     fetchedResults.unshift(
+    //       {
+    //         ...response.data[key],
+    //         id:key
+    //       }
+    //     )
+    //   }
+    //   this.setState({results:fetchedResults})
+    // })
   }
   render() {
     return (
       <View>
         <Text style={styles.currentDescription}>History</Text>
         <ScrollView>
-          {this.state.results.map((result) => (
+          {this.state.results.map((result, index) => (
             <TouchableOpacity>
-              <View key={result.id}>
+              <View key={index}>
                 {/* <Text styles={styles.time}>
                   {result.month}/{result.date}/{result.year}{" "}
                   {result.currentHour}:{result.currentMinutes}
