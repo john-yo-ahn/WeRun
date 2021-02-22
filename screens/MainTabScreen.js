@@ -12,16 +12,37 @@ const HomeStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const MainTabScreen = () => (
-    <Tab.Navigator initialRouteName="Run">
-        <Tab.Screen 
-            name="Run"
-            component={Run}
-        />
-        <Tab.Screen
-            name="Weather"
-            component={Weather}
-        />
-    </Tab.Navigator>
+  <Tab.Navigator
+    initialRouteName="Weather"
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
+        let iconName;
+        let iconSize;
+
+        if (route.name === "Weather") {
+          iconName = "partly-sunny-outline";
+          iconSize = focused ? 35 : 25;
+        } else if (route.name === "Run") {
+          iconName = "walk-outline";
+          iconSize = focused ? 35 : 25;
+        }
+
+        // You can return any component that you like here!
+        return <Icon name={iconName} size={iconSize} color={color} />;
+      },
+    })}
+    tabBarOptions={{
+      activeTintColor: "#e96e50",
+      inactiveTintColor: "gray",
+      //   showLabel: false,
+    }}
+  >
+    <Tab.Screen
+      name="Run"
+      component={Run}
+    />
+    <Tab.Screen name="Weather" component={Weather} />
+  </Tab.Navigator>
 );
 
 export default MainTabScreen;

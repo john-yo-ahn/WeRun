@@ -24,7 +24,7 @@ export default function SignIn({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.currentDescription}>Sign in to your account:</Text>
+      <Text style={styles.currentDescription}>Sign In:</Text>
 
       <TextInput
         placeholder="Enter your email"
