@@ -1,9 +1,10 @@
+import { NavigationContainer } from "@react-navigation/native";
 import React, { useState } from "react";
 import { View, Text, TextInput, StyleSheet, Alert } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { signIn } from "../API/firebaseMethods";
 
-export default function SignIn() {
+export default function SignIn({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -18,6 +19,7 @@ export default function SignIn() {
     signIn(email, password);
     setEmail("");
     setPassword("");
+    navigation.navigate("Loading");
   };
 
   return (
@@ -36,7 +38,7 @@ export default function SignIn() {
         onChangeText={(password) => setPassword(password)}
         secureTextEntry={true}
       />
-      <TouchableOpacity onPress={handlePress} >
+      <TouchableOpacity onPress={handlePress}>
         <Text> {"\n"}</Text>
         <Text> Submit </Text>
       </TouchableOpacity>

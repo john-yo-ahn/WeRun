@@ -7,7 +7,7 @@ import WelcomeScreen from "./screens/WelcomeScreen";
 import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
 import LoadingScreen from "./screens/LoadingScreen";
-import MainTabScreen from "./screens/LoadingScreen";
+import MainTabScreen from "./screens/MainTabScreen";
 import { StatusBar } from 'expo-status-bar';
 import { View, Text, StyleSheet } from "react-native";
 import "react-native-gesture-handler";
@@ -66,11 +66,11 @@ export default class App extends React.Component{
              component={SignIn}
              options={{ headerShown: false }}
            />
-           {/* <Stack.Screen
+           <Stack.Screen
              name={"MainTab"}
              component={MainTabScreen}
              options={{ headerShown: false }}
-           /> */}
+           />
          </Stack.Navigator>
        </NavigationContainer>
      );
