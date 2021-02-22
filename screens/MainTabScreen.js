@@ -11,7 +11,7 @@ import SettingScreen from "./SettingScreen";
 import HealthStatsScreen from "./HealthStatsScreenMain";
 
 const HomeStack = createStackNavigator();
-const Tab = createMaterialBottomTabNavigator();
+const Tab = createBottomTabNavigator();
 
 const MainTabScreen = () => (
   <Tab.Navigator initialRouteName="Home" activeColor="#fff">
