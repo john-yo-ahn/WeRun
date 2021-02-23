@@ -37,3 +37,20 @@ export async function loggingOut() {
     Alert.alert('There is something wrong!', err.message);
   }
 }
+
+export async function postRecordingFirebaseHandler(
+) {
+  try {
+    const currentUserUID = await firebase.auth().currentUser.uid;
+    console.log('currentUserUID in postRecordingFirebaseHandler in firebaseMethods--->', currentUserUID)
+    const db = firebase.firestore();
+    // const userData = await (
+    //   await db.collection("users").doc(currentUserUID).get()
+    // ).data();
+    // console.log(userData)
+  } catch (err) {
+    Alert.alert("There is something wrong!!!!", err.message);
+  }
+}
+
+
