@@ -2,29 +2,18 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView, SafeAreaView} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import * as firebase from "firebase";
-import crud from "../API/crud";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
 export default class History extends React.Component {
  
-  state={
-    results:[]
+  constructor(props) {
+    super(props);
+    this.state = {
+      results: []
+    }
   }
-
-  componentDidMount() {
-    // crud.get('/history.json').then(response => {
-    //   const fetchedResults = []
-    //   for (let key in response.data) {
-    //     fetchedResults.unshift(
-    //       {
-    //         ...response.data[key],
-    //         id:key
-    //       }
-    //     )
-    //   }
-    //   this.setState({results:fetchedResults})
-    // })
-  }
+  // componentDidMount() {
+  // }
   render() {
     return (
       <View>
