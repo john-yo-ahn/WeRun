@@ -24,7 +24,6 @@ import haversine from "haversine";
 import PubNubReact from "pubnub-react";
 import { Ionicons } from "@expo/vector-icons";
 import { IconButton, Colors } from "react-native-paper";
-import crud from '../API/crud'
 import {postRecordingFirebaseHandler} from "../API/firebaseMethods"
 import "firebase/firestore";
 
@@ -263,10 +262,7 @@ class Run extends React.Component {
     //   date: this.state.date,
     //   currentHour: this.state.currentHour,
     //   currentMinutes: this.state.currentMinutes,
-    // };
-    // crud.post("/history.json", data).then((response) => {
-    //   console.log("response.data---->", response.data);
-    // });
+    // };ß
     postRecordingFirebaseHandler()
   };
 

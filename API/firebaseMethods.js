@@ -6,19 +6,19 @@ export async function registration(email, password, lastName, firstName) {
   try {
     await firebase.auth().createUserWithEmailAndPassword(email, password);
     const currentUser = firebase.auth().currentUser;
-    console.log('currentUser in firebase --->', currentUser)
+    // console.log('currentUser in registration--->', currentUser)
     const db = firebase.firestore();
-    db.collection("users")
-      .doc(currentUser.uid)
-      .set({
-        email: currentUser.email,
-        lastName: lastName,
-        firstName: firstName,
-      });
+    console.log('db in regisration collections--->', db.collection("users"))
+    await db.collection("users").doc(currentUser.uid).set({
+      email: currentUser.email,
+      lastName: lastName,
+      firstName: firstName,
+    });
   } catch (err) {
     Alert.alert("There is something wrong!!!!", err.message);
   }
 }
+
 
 export async function signIn(email, password) {
   try {
@@ -38,19 +38,19 @@ export async function loggingOut() {
   }
 }
 
-export async function postRecordingFirebaseHandler(
-) {
-  try {
-    const currentUserUID = await firebase.auth().currentUser.uid;
-    console.log('currentUserUID in postRecordingFirebaseHandler in firebaseMethods--->', currentUserUID)
-    const db = firebase.firestore();
-    // const userData = await (
-    //   await db.collection("users").doc(currentUserUID).get()
-    // ).data();
-    // console.log(userData)
-  } catch (err) {
-    Alert.alert("There is something wrong!!!!", err.message);
-  }
-}
+// export async function postRecordingFirebaseHandler(
+// ) {
+//   try {
+//     const currentUserUID = await firebase.auth().currentUser.uid;
+//     // console.log('currentUserUID in postRecordingFirebaseHandler in firebaseMethods--->', currentUserUID)
+//     const db = firebase.firestore();
+//     // const userData = await (
+//     //   await db.collection("users").doc(currentUserUID).get()
+//     // ).data();
+//     // console.log('userData in firebaseMethods int he postRecordingFirebaseHandler--->', userData)
+//   } catch (err) {
+//     Alert.alert("There is something wrong!!!!", err.message);
+//   }
+// }
 
 
