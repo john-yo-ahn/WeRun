@@ -25,6 +25,8 @@ import PubNubReact from "pubnub-react";
 import { Ionicons } from "@expo/vector-icons";
 import { IconButton, Colors } from "react-native-paper";
 import crud from '../API/crud'
+import {postRecordingFirebaseHandler} from "../API/firebaseMethods"
+import "firebase/firestore";
 
 
 
@@ -250,21 +252,22 @@ class Run extends React.Component {
   }
 
   postDataHandler = () => {
-    const data = {
-      minutes: this.state.minutes,
-      counter: this.state.counter,
-      miliseconds: this.state.miliseconds,
-      routeCoordinates: this.state.routeCoordinates,
-      distanceTravelled: this.state.distanceTravelled,
-      year: this.state.year,
-      month: this.state.month,
-      date: this.state.date,
-      currentHour: this.state.currentHour,
-      currentMinutes: this.state.currentMinutes,
-    };
+    // const data = {
+    //   minutes: this.state.minutes,
+    //   counter: this.state.counter,
+    //   miliseconds: this.state.miliseconds,
+    //   routeCoordinates: this.state.routeCoordinates,
+    //   distanceTravelled: this.state.distanceTravelled,
+    //   year: this.state.year,
+    //   month: this.state.month,
+    //   date: this.state.date,
+    //   currentHour: this.state.currentHour,
+    //   currentMinutes: this.state.currentMinutes,
+    // };
     // crud.post("/history.json", data).then((response) => {
     //   console.log("response.data---->", response.data);
     // });
+    postRecordingFirebaseHandler()
   };
 
   render() {
@@ -278,7 +281,7 @@ class Run extends React.Component {
             }}
             // provider={PROVIDER_GOOGLE}
             showUserLocation={true}
-            followUserLocation
+            followUserLocation = {true}
             loadingEnabled
             // region={this.getMapRegion()}
           >
