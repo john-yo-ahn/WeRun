@@ -8,7 +8,6 @@ export async function registration(email, password, lastName, firstName) {
     const currentUser = firebase.auth().currentUser;
     // console.log('currentUser in registration--->', currentUser)
     const db = firebase.firestore();
-    console.log('db in regisration collections--->', db.collection("users"))
     await db.collection("users").doc(currentUser.uid).set({
       email: currentUser.email,
       lastName: lastName,
@@ -38,19 +37,22 @@ export async function loggingOut() {
   }
 }
 
-// export async function postRecordingFirebaseHandler(
-// ) {
-//   try {
-//     const currentUserUID = await firebase.auth().currentUser.uid;
-//     // console.log('currentUserUID in postRecordingFirebaseHandler in firebaseMethods--->', currentUserUID)
-//     const db = firebase.firestore();
-//     // const userData = await (
-//     //   await db.collection("users").doc(currentUserUID).get()
-//     // ).data();
-//     // console.log('userData in firebaseMethods int he postRecordingFirebaseHandler--->', userData)
-//   } catch (err) {
-//     Alert.alert("There is something wrong!!!!", err.message);
-//   }
-// }
+export async function postRecordingFirebaseHandler(
+) {
+  try {
+    const currentUserUID = await firebase.auth().currentUser.uid;
+    // console.log('currentUserUID in postRecordingFirebaseHandler in firebaseMethods--->', currentUserUID)
+    const db = firebase.firestore();
+    const userData = await (
+      await db.collection("users").doc(currentUserUID).get()
+    ).data();
+    console.log('userData in firebaseMethods int he postRecordingFirebaseHandler--->', userData)
+    await db.collection("users").doc(currentUserUID).collection("sessions").doc().set({
+      
+    })
+  } catch (err) {
+    Alert.alert("There is something wrong!!!!", err.message);
+  }
+}
 
 
