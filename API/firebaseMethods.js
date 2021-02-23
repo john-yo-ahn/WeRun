@@ -36,9 +36,31 @@ export async function loggingOut() {
     Alert.alert('There is something wrong!', err.message);
   }
 }
+    const data = {
+      minutes: this.state.minutes,
+      counter: this.state.counter,
+      miliseconds: this.state.miliseconds,
+      routeCoordinates: this.state.routeCoordinates,
+      distanceTravelled: this.state.distanceTravelled,
+      year: this.state.year,
+      month: this.state.month,
+      date: this.state.date,
+      currentHour: this.state.currentHour,
+      currentMinutes: this.state.currentMinutes,
+    };
 
 export async function postRecordingFirebaseHandler(
-) {
+  // minutes,
+  // counter,
+  // miliseconds,
+  // routeCoordinates,
+  // distanceTravelled,
+  // year,
+  // month,
+  // date,
+  // currentHour,
+  // currentMinutes,
+  ) {
   try {
     const currentUserUID = await firebase.auth().currentUser.uid;
     // console.log('currentUserUID in postRecordingFirebaseHandler in firebaseMethods--->', currentUserUID)
@@ -47,9 +69,18 @@ export async function postRecordingFirebaseHandler(
       await db.collection("users").doc(currentUserUID).get()
     ).data();
     console.log('userData in firebaseMethods int he postRecordingFirebaseHandler--->', userData)
-    await db.collection("users").doc(currentUserUID).collection("sessions").doc().set({
-      
-    })
+    // await db.collection("users").doc(currentUserUID).collection("sessions").doc().set({
+    //   minutes: minutes,
+    //   counter: counter,
+    //   miliseconds: miliseconds,
+    //   routeCoordinates: routeCoordinates,
+    //   distanceTravelled: distanceTravelled,
+    //   year: year,
+    //   month: month,
+    //   date: date,
+    //   currentHour: currentHour,
+    //   currentMinutes: currentMinutes
+    // })
   } catch (err) {
     Alert.alert("There is something wrong!!!!", err.message);
   }

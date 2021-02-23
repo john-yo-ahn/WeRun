@@ -262,8 +262,19 @@ class Run extends React.Component {
     //   date: this.state.date,
     //   currentHour: this.state.currentHour,
     //   currentMinutes: this.state.currentMinutes,
-    // };ß
-    postRecordingFirebaseHandler()
+    // };
+    // postRecordingFirebaseHandler(
+    //   this.state.minutes,
+    //   this.state.counter,
+    //   this.state.miliseconds,
+    //   this.state.routeCoordinates,
+    //   this.state.distanceTravelled,
+    //   this.state.year,
+    //   this.state.month,
+    //   this.state.date,
+    //   this.state.currentHour,
+    //   this.state.currentMinutes
+    // )
   };
 
   render() {
