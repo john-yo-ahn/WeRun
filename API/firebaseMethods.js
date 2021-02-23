@@ -38,6 +38,7 @@ export async function loggingOut() {
 }
 
 export async function postRecordingFirebaseHandler(
+  data
 ) {
   try {
     const currentUserUID = await firebase.auth().currentUser.uid;
@@ -48,7 +49,7 @@ export async function postRecordingFirebaseHandler(
     ).data();
     console.log('userData in firebaseMethods int he postRecordingFirebaseHandler--->', userData)
     await db.collection("users").doc(currentUserUID).collection("sessions").doc().set({
-      
+      data: data
     })
   } catch (err) {
     Alert.alert("There is something wrong!!!!", err.message);

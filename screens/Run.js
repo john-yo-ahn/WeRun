@@ -251,19 +251,20 @@ class Run extends React.Component {
   }
 
   postDataHandler = () => {
-    // const data = {
-    //   minutes: this.state.minutes,
-    //   counter: this.state.counter,
-    //   miliseconds: this.state.miliseconds,
-    //   routeCoordinates: this.state.routeCoordinates,
-    //   distanceTravelled: this.state.distanceTravelled,
-    //   year: this.state.year,
-    //   month: this.state.month,
-    //   date: this.state.date,
-    //   currentHour: this.state.currentHour,
-    //   currentMinutes: this.state.currentMinutes,
-    // };ß
-    postRecordingFirebaseHandler()
+    const data = {
+      routeCoordinates: this.state.routeCoordinates,
+      distanceTravelled: this.state.distanceTravelled,
+      year: this.state.year,
+      month: this.state.month,
+      date: this.state.date,
+      currentHour: this.state.currentHour,
+      currentMinutes: this.state.currentMinutes,
+      minutes: this.state.minutes,
+      counter: this.state.counter,
+      miliseconds: this.state.miliseconds,
+    };
+    console.log('data--->', data)
+    postRecordingFirebaseHandler(data)
   };
 
   render() {
