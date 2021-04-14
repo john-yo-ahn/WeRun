@@ -3,7 +3,9 @@ It allows you to store your running progress and check the weather from the phon
 
 I created the app with React-Native for the frontend & Firebase for the backend while utilizing the geolocation technologies to track the user location.
 
+Current Work in Progress:
 
+History page design and render
 
 
 ![Screen Shot 2021-04-14 at 2 30 38 PM](https://user-images.githubusercontent.com/69434435/114762080-54ffb500-9d2f-11eb-89b7-b2806da32020.png)
