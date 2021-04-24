@@ -12,9 +12,27 @@ export default class History extends React.Component {
       results: []
     }
   }
-  // componentDidMount() {
-  // }
+  componentDidMount() {
+    // console.log('results --->', this.state.results)
+    // console.log('firebase-->', firebase.auth().currentUser.uid)
+    // console.log('firebase---> ', firebase.firestore())
+    this.getHistoryData()
+  }
+  async getHistoryData() {
+    const currentUser = firebase.auth().currentUser
+    const db = firebase.firestore()
+    await db.collection('users').doc(currentUser.uid).collection('sessions').onSnapshot((snapshot) => {
+      const data = snapshot.docs.map((doc) => {
+        if (doc.data().data){
+          return doc.data().data
+        }
+      })
+      console.log('data',data)
+    })
+  }
+  
   render() {
+    console.log('results--->',this.state.results)
     return (
       <View>
         <Text style={styles.currentDescription}>History</Text>
