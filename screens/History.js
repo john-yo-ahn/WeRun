@@ -23,13 +23,16 @@ export default class History extends React.Component {
     // console.log('hello', hello)
     this.getHistoryData()
   }
+  componentShouldUpdate(){
+    this.getHistoryData()
+  }
   async getHistoryData() {
     const currentUser = firebase.auth().currentUser
     const db = firebase.firestore()
     const data = await db.collection('users').doc(currentUser.uid).collection('sessions').get()
     const hello = data.docs.map((doc) => doc.data())
     const userHistory = hello.filter((elem) => elem.data).map((elem) => elem)
-    this.setState({results:userHistory})
+    this.setState({results:userHistory.reverse()})
     
     
 
