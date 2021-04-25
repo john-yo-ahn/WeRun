@@ -16,28 +16,37 @@ export default class History extends React.Component {
     // console.log('results --->', this.state.results)
     // console.log('firebase-->', firebase.auth().currentUser.uid)
     // console.log('firebase---> ', firebase.firestore())
+    // const currentUser = firebase.auth().currentUser
+    // const db = firebase.firestore()
+    // const data = db.collection('users').doc(currentUser.uid).collection('sessions').get()
+    // const hello = data.docs.map((doc) => doc.data())
+    // console.log('hello', hello)
     this.getHistoryData()
   }
   async getHistoryData() {
     const currentUser = firebase.auth().currentUser
     const db = firebase.firestore()
-    await db.collection('users').doc(currentUser.uid).collection('sessions').onSnapshot((snapshot) => {
-      const data = snapshot.docs.map((doc) => {
-        if (doc.data().data){
-          return doc.data().data
-        }
-      })
-      console.log('data',data)
-    })
+    const data = await db.collection('users').doc(currentUser.uid).collection('sessions').get()
+    const hello = data.docs.map((doc) => doc.data())
+    const userHistory = hello.filter((elem) => elem.data).map((elem) => elem)
+    this.setState({results:userHistory})
+    
+    
+
+    // data.onSnapshot((snapshot) => {
+    //   const snap = snapshot.docs.map((doc) => {
+    //     return doc.data().data
+    //     // this.state.results.push(doc.data().data)
+    //   })
+    // })
   }
-  
   render() {
-    console.log('results--->',this.state.results)
+    console.log('this.state.', this.state.results)
     return (
       <View>
         <Text style={styles.currentDescription}>History</Text>
         <ScrollView>
-          {this.state.results.map((result, index) => (
+          {/* {this.state.results.map((result, index) => (
             <TouchableOpacity>
               <View key={index}>
                 <Text styles={styles.time}>
@@ -51,6 +60,33 @@ export default class History extends React.Component {
               <Text style={styles.currentDistance}>
                 {parseFloat(result.distanceTravelled).toFixed(2)} km
               </Text>
+            </TouchableOpacity>
+          ))} */}
+          {this.state.results.map((result, index) => (
+            <TouchableOpacity>
+              {/* <View>
+                <Text styles={styles.currentTimer}>
+                  {result.data.month}/{result.data.date}/{result.data.year}{" "}
+                  {result.data.currentHour}:{result.data.currentMinutes}
+                </Text>
+              </View> */}
+              <View>
+                <Text style={styles.historyTime}>
+                  {result.data.month}/{result.data.date}/{result.data.year}{" "}
+                </Text>
+                <Text style={styles.historyTime}>
+                  {result.data.currentHour}:{result.data.currentMinutes}{" "}
+                </Text>
+                <Text style={styles.currentTimer}>
+                  {result.data.minutes}.{result.data.counter}.
+                  {result.data.miliseconds}s
+                </Text>
+              </View>
+              <View>
+                <Text style={styles.currentDistance}>
+                  {parseFloat(result.data.distanceTravelled).toFixed(2)} km
+                </Text>
+              </View>
             </TouchableOpacity>
           ))}
         </ScrollView>
@@ -128,6 +164,13 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "200",
     fontSize: 30,
+    marginBottom: 5,
+  },
+  historyTime: {
+    width: "100%",
+    textAlign: "center",
+    fontWeight: "200",
+    fontSize: 20,
     marginBottom: 5,
   },
 });
