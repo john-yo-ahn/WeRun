@@ -5,8 +5,7 @@ I created the app with React-Native for the frontend & Firebase for the backend 
 
 Current Work in Progress:
 
-- history screen design and render
-
+V2 planning in progress
 
 ![Screen Shot 2021-04-14 at 2 30 38 PM](https://user-images.githubusercontent.com/69434435/114762080-54ffb500-9d2f-11eb-89b7-b2806da32020.png)
 ![Screen Shot 2021-04-14 at 2 30 50 PM](https://user-images.githubusercontent.com/69434435/114762087-56c97880-9d2f-11eb-8779-acb21a56f5f1.png)
