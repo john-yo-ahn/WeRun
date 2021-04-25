@@ -12,3 +12,4 @@ V2 planning in progress
 ![Screen Shot 2021-04-14 at 2 31 01 PM](https://user-images.githubusercontent.com/69434435/114762106-5a5cff80-9d2f-11eb-9f55-693837e70335.png)
 ![Screen Shot 2021-04-14 at 2 31 25 PM](https://user-images.githubusercontent.com/69434435/114762114-5d57f000-9d2f-11eb-9e20-d7938a62a5dc.png)
 ![Screen Shot 2021-04-14 at 2 31 46 PM](https://user-images.githubusercontent.com/69434435/114762120-5e891d00-9d2f-11eb-97a7-7c306ba5eaa7.png)
+<img width="428" alt="Screen Shot 2021-04-24 at 10 00 20 PM" src="https://user-images.githubusercontent.com/69434435/115977764-f1ecfa00-a548-11eb-8a9a-80b689736a86.png">
